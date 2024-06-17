@@ -20,10 +20,10 @@ const Index = () => {
   const { data, error, isLoading } = useQuery("topStories", fetchTopStories);
 
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Text fontSize="2xl">Top 5 Hacker News Stories</Text>
-        <Button onClick={toggleColorMode}>
+    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={4}>
+      <VStack spacing={4} w="100%">
+        <Text fontSize={{ base: "xl", md: "2xl" }} textAlign="center">Top 5 Hacker News Stories</Text>
+        <Button onClick={toggleColorMode} w={{ base: "100%", sm: "auto" }}>
           Toggle {colorMode === "light" ? "Dark" : "Light"} Mode
         </Button>
         {isLoading ? (
