@@ -20,9 +20,9 @@ const Index = () => {
   const { data, error, isLoading } = useQuery("topStories", fetchTopStories);
 
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Text fontSize="2xl">Top 5 Hacker News Stories</Text>
+    <Container centerContent maxW={{ base: "container.sm", md: "container.md" }} height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={4}>
+      <VStack spacing={4} w="100%">
+        <Text fontSize={{ base: "xl", md: "2xl" }}>Top 5 Hacker News Stories</Text>
         <Button onClick={toggleColorMode}>
           Toggle {colorMode === "light" ? "Dark" : "Light"} Mode
         </Button>
@@ -34,7 +34,7 @@ const Index = () => {
           <Box maxH="60vh" overflowY="auto" w="100%">
             {data.map((story) => (
               <Box key={story.id} p={4} borderWidth="1px" borderRadius="lg" mb={4}>
-                <Text fontSize="lg" fontWeight="bold">{story.title}</Text>
+                <Text fontSize={{ base: "md", md: "lg" }} fontWeight="bold">{story.title}</Text>
                 <Link href={story.url} color="teal.500" isExternal>Read more</Link>
                 <Text>Upvotes: {story.score}</Text>
               </Box>
