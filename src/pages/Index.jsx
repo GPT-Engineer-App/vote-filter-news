@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Text, VStack, Button, useColorMode, Box, Link, Spinner } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Container, Text, VStack, Button, useColorMode, Box, Link, Spinner, Input } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 
 const fetchTopStories = async () => {
@@ -19,6 +19,12 @@ const Index = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { data, error, isLoading } = useQuery("topStories", fetchTopStories);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredStories = data?.filter(story => 
+    story.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center" p={4}>
       <VStack spacing={4} w="100%">
@@ -26,13 +32,19 @@ const Index = () => {
         <Button onClick={toggleColorMode} w={{ base: "100%", sm: "auto" }}>
           Toggle {colorMode === "light" ? "Dark" : "Light"} Mode
         </Button>
+        <Input 
+          placeholder="Search stories..." 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+          w={{ base: "100%", sm: "auto" }} 
+        />
         {isLoading ? (
           <Spinner size="xl" />
         ) : error ? (
           <Text>Error fetching stories</Text>
         ) : (
           <Box maxH="60vh" overflowY="auto" w="100%">
-            {data.map((story) => (
+            {filteredStories.map((story) => (
               <Box key={story.id} p={4} borderWidth="1px" borderRadius="lg" mb={4}>
                 <Text fontSize="lg" fontWeight="bold">{story.title}</Text>
                 <Link href={story.url} color="teal.500" isExternal>Read more</Link>
